@@ -9,9 +9,9 @@
             Active = true;
         }
 
-        public string FullName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public bool Active { get; set; }
-        public List<Loan> Loans { get; set; }
+        public string FullName { get; private set; } 
+        public string Email { get; private set; } 
+        public bool Active { get; private set; }
+        public List<Loan> Loans { get; private set; }
     }
 }
