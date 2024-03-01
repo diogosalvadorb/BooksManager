@@ -1,23 +1,30 @@
 ﻿using BooksManager.Core.Entities;
 using BooksManager.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BooksManager.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task<User> AddAsync(User book)
+        private readonly BookManagerDbContext _dbContext;
+        public UserRepository(BookManagerDbContext context)
         {
-            throw new NotImplementedException();
+            _dbContext = context;
+        }
+        public async Task AddAsync(User user)
+        {
+            await _dbContext.Users.AddAsync(user);
+            await SaveChangesAsync();
         }
 
-        public Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == id && x.Active);
         }
 
-        public Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
