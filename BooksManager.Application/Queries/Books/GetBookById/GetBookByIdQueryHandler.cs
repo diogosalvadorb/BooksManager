@@ -1,5 +1,4 @@
-﻿using Azure;
-using BooksManager.Application.ViewModels;
+﻿using BooksManager.Application.ViewModels;
 using BooksManager.Core.Repositories;
 using MediatR;
 
