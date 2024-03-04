@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BooksManager.Application.Commands.Loans.CreateLoan;
+using BooksManager.Application.Queries.Loans.GetLoan;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksManager.API.Controllers
@@ -7,5 +9,31 @@ namespace BooksManager.API.Controllers
     [ApiController]
     public class LoansController : ControllerBase
     {
+        private readonly IMediator _mediator;
+        public LoansController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLoanById([FromRoute] int id)
+        {
+            var loan = await _mediator.Send(new GetLoanByIdQuery(id));
+
+            if(loan == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(loan);  
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateLoan(CreateLoanCommand command)
+        {
+            var id = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetLoanById), new { Id = id }, command);
+        }
     }
 }

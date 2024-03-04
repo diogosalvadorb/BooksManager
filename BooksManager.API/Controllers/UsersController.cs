@@ -18,18 +18,18 @@ namespace BooksManager.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
-            var queryResult = await _mediator.Send(new GetUserByIdQuery(id));
+            var user = await _mediator.Send(new GetUserByIdQuery(id));
 
-            if(queryResult == null)
+            if(user == null)
             {
                 return NotFound();
             }
 
-            return Ok(queryResult);
+            return Ok(user);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             var id = await _mediator.Send(command);
 
