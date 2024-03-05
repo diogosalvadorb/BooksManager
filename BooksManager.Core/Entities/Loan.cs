@@ -16,6 +16,11 @@
         public Book Book { get; private set; }
         public DateTime? LoanDate { get; private set; }
         public DateTime? ReturnDate { get; private set; }
-        public DateTime? DueDate { get; private set; }
+        public DateTime DueDate { get; private set; }
+
+        public void ConfirmReturn()
+        {
+            ReturnDate = DateTime.UtcNow;
+        }
     }
 }
